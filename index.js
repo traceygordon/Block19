@@ -46,9 +46,9 @@ function init() {
    * 👉 STEP 4:
    *    Create a function to render the freelancers in our Freelance array
    */
-  let newPrice = document.getElementById("newPrice");
+  let newPrice = document.querySelector("#newPrice");
   newPrice = calAvgPrice(freelancers);
-  newPrice.innerText = `$$(newAverage)`;
+  newPrice.textContent = `${newPrice}`;
 
   function calAvgPrice(freelancers) {
     const totalPrice = freelancers.reduce(
@@ -56,7 +56,7 @@ function init() {
       0
     );
 
-    return totalPrice / freelancers.length;
+    return Math.floor(totalPrice / freelancers.length);
   };
 
   function printFreelancers(freelancerArray) {
