@@ -9,42 +9,10 @@ function init() {
    *    Add the new h1 to the root div
    */
   //headers
-  const heading = document.createElement("h1");
-  heading.textContent = "Freelancer Forum";
-  rootContainer.append(heading);
+  // const heading = document.createElement("h1");
+  // heading.textContent = "Freelancer Forum";
+  // rootContainer.append(heading);
 
-  /**
-   * 👉 STEP 3:
-   *    Create a table to hold our freelancers in
-   */
-  //table
-  const table = document.createElement("table");
-  rootContainer.append(table);
-
-  const tHead = document.createElement("thead");
-  table.append(tHead);
-
-  //table row
-  const row1 = document.createElement("tr");
-  tHead.append(row1);
-
-  //table headers
-  const col1 = document.createElement("th");
-  col1.textContent = "Name";
-  row1.append(col1);
-
-  const col2 = document.createElement("th");
-  col2.textContent = "Occupation";
-  row1.append(col2);
-
-  const col3 = document.createElement("th");
-  col3.textContent = "Starting Price";
-  row1.append(col3);
-
-  //Arrays
-  // const name = ["Alice", "Bob", "Carol"];
-  // const occupation = ["writer", "teacher", "engineer"];
-  // const price = [30, 50, 70];
   let freelancers = [
     {
       name: "Alice",
@@ -65,14 +33,32 @@ function init() {
     },
   ];
 
-  const tBody = document.createElement("tbody");
-  tBody.setAttribute("id", "tableBody");
-  table.append(tBody);
+  let avgPrice = 30;
+
+  // /**
+  //  * 👉 STEP 3:
+  //  *    Create a table to hold our freelancers in
+  //  */
+
+  //on HTML page
 
   /**
    * 👉 STEP 4:
    *    Create a function to render the freelancers in our Freelance array
    */
+  let newPrice = document.getElementById("newPrice");
+  newPrice = calAvgPrice(freelancers);
+  newPrice.innerText = `$$(newAverage)`;
+
+  function calAvgPrice(freelancers) {
+    const totalPrice = freelancers.reduce(
+      (sum, freelancer) => sum + freelancer.price,
+      0
+    );
+
+    return totalPrice / freelancers.length;
+  };
+
   function printFreelancers(freelancerArray) {
     tBody.innerHTML = "";
 
@@ -90,6 +76,9 @@ function init() {
 
       newRow.append(freelancerName, freelancerJob, freelancerPrice);
       tBody.append(newRow);
+
+      calAvgPrice(freelancerArray);
+      console.log(calAvgPrice(freelancerArray));
     });
   }
 
@@ -129,7 +118,7 @@ function init() {
     const addName = funNames[Math.floor(Math.random() * funNames.length)];
     const addJob = funJobs[Math.floor(Math.random() * funJobs.length)];
 
-    freelancers.push({name: addName, occupation: addJob, price: addPrice });
+    freelancers.push({ name: addName, occupation: addJob, price: addPrice });
 
     printFreelancers(freelancers);
   }
@@ -139,8 +128,14 @@ function init() {
    *    Add an interval to add a new freelancer every second
    */
 
-  setInterval(addFreelancer, 1000);
+  let newFreelancer = setInterval(addFreelancer, 1000);
+
+setTimeout(() => {
+
+  clearInterval(newFreelancer);
+}, 5000);
+}
+
 
   //call init function
-}
 init();
