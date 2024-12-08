@@ -47,9 +47,6 @@ function init() {
    *    Create a function to render the freelancers in our Freelance array
    */
   let newPrice = document.querySelector("#newPrice");
-  newPrice = calAvgPrice(freelancers);
-  newPrice.textContent = `${newPrice}`;
-
   function calAvgPrice(freelancers) {
     const totalPrice = freelancers.reduce(
       (sum, freelancer) => sum + freelancer.price,
@@ -57,7 +54,12 @@ function init() {
     );
 
     return Math.floor(totalPrice / freelancers.length);
-  };
+  }
+
+  function updatePrice() {
+    freelancerPrice = calAvgPrice(freelancers);
+    newPrice.textContent = `${freelancerPrice}`;
+  }
 
   function printFreelancers(freelancerArray) {
     tBody.innerHTML = "";
@@ -121,8 +123,10 @@ function init() {
     freelancers.push({ name: addName, occupation: addJob, price: addPrice });
 
     printFreelancers(freelancers);
+    updatePrice();
   }
 
+  updatePrice();
   /**
    * 👉 STEP 7:
    *    Add an interval to add a new freelancer every second
@@ -130,12 +134,10 @@ function init() {
 
   let newFreelancer = setInterval(addFreelancer, 1000);
 
-setTimeout(() => {
-
-  clearInterval(newFreelancer);
-}, 5000);
+  setTimeout(() => {
+    clearInterval(newFreelancer);
+  }, 5000);
 }
 
-
-  //call init function
+//call init function
 init();
